@@ -28,7 +28,6 @@ library(tidyverse)
 
 
 ```{r}
-
 data_rep_ch7 <- read_csv("data_rep_ch7.csv")
 
 informal_vs_enforce <- data_rep_ch7 |>
@@ -39,7 +38,28 @@ informal_vs_enforce <- data_rep_ch7 |>
 informal_vs_enforce <- informal_vs_enforce |>
   mutate(informal_power = if_else(info==1, "Informal Power", "No Informal Power"),
          enforce_power = if_else(enforce==1, "Not Enforceable", "Enforceable"))
+```
+```{r}
 
+enforceability <- data_rep_ch7 |>
+  group_by(enforce) |>
+  summarise(n = n())
+
+enforceability <- enforceability |>
+  mutate(enforce_new = if_else(enforce==1, "Not Enforceable", "Enforceable"))
+
+enforce_barplot <- enforceability |>
+  ggplot(aes(x = enforce_new,
+             y = n)) + 
+  geom_bar(position = "dodge", stat = "identity") +
+  labs(title = "Enforceable vs. Not Enforceable International Agreements",
+       x = "Enforceability of Agreements",
+       y = "Amount of Agreements")
+enforce_barplot
+```
+
+
+```{r}
 informal_vs_enforce_barplot <- informal_vs_enforce |>
   ggplot(aes(fill= enforce_power,
              y = n,
@@ -47,5 +67,8 @@ informal_vs_enforce_barplot <- informal_vs_enforce |>
   labs(title = "Informal Conflict Resolution vs. Enforceability of International Agreements",
        x = "Informal Power Capabilities", y = "Amount of Agreements")
 informal_vs_enforce_barplot
+```
+```{r}
+
 ```
 
