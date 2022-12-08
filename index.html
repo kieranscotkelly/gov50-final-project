@@ -1579,9 +1579,19 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <h2 id="regression">Regression</h2>
 <div class="layout-chunk" data-layout="l-body">
-
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>enforceable_informal_regression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>enforce</span> <span class='op'>~</span> <span class='va'>info</span>, data <span class='op'>=</span> <span class='va'>data_rep_ch7</span><span class='op'>)</span></span>
+<span><span class='va'>enforceable_informal_regression</span></span></code></pre>
 </div>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<pre><code>
+Call:
+lm(formula = enforce ~ info, data = data_rep_ch7)
+
+Coefficients:
+(Intercept)         info  
+     0.2029       0.3284  </code></pre>
+</div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

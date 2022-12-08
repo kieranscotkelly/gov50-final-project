@@ -76,6 +76,8 @@ informal_vs_enforce_barplot
 ## Regression
 
 ```{r}
+enforceable_informal_regression <- lm(enforce ~ info, data = data_rep_ch7)
+enforceable_informal_regression
 
 ```
 
