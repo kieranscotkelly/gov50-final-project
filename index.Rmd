@@ -7,25 +7,28 @@ output:
     self_contained: false
 ---
 
+## Introduction
 
+Are international legal agreements more enforceable when parties can negotiate and coordinate informally? In this study, I will analyze the relationship between the ability for international parties to negotiate in an informal manner and the enforceability of the agreement under which they would have such ability. I hypothesize that those agreements which allow for nations to coordinate in informal negotiations will be more effective in the metric of enforceability. My theory in support is rooted in the inherent power of the state; in agreements where nation states have more authority over the conditions with which they can interact with their peers, these conditions, with this greater leeway, will be more enforceable.
 
-## Project thoughts
+## Data
 
-I am interested in exploring data related to international law. I am excited to leverage data to better understand why international legal institutions act in the ways they do. This may include the efficacy of the institutions, the actions taken by institutions, or other forms of analysis related to international law.
+The data for this project is sourced from Barabara Koremenos's book *The Continent of International Law: Explaining Agreement Design*. In this book, Koremenos explains the ins and outs of international agreements and argues that the nuts and bolts matter. The inputs to these agreements, including the design of the agreement, the matter for which the agreement deals, and the amount of parties signing onto the agreement, impact the efficacy of such agreement.
+
+Each chapter of Koremenos's book includes a different data set. My data set comes from her seventh chapter, "Dispute resolution provisions," in which she analyzes what aspects of international agreements contribute to better resuslts in dispute resolution. In my analysis, I specifically analyze two binary variables: "enforce" and "info." In her code, "enforce" is coded as a '1' if there is a problem with enforcement and '0' if informal power may be used in dispute resolution. This informal power may refer to side payments, fines, or other kinds of compensation that may resolve disputes without formal and traditional negotiations.
+
 
 ## Research Proposal
 
 Are international legal agreements more enforceable when parties can negotiate and coordinate informally? In this study, I will analyze the relationship between the ability for international parties to negotiate in an informal manner and the enforceability of the agreement under which they would have such ability. I hypothesize that those agreements which allow for nations to coordinate in informal negotiations will be more effective in the metric of enforceability. My theory in support is rooted in the inherent power of the state; in agreements where nation states have more authority over the conditions with which they can interact with their peers, these conditions, with this greater leeway, will be more enforceable. My explanatory variable regards whether or not international legal agreements allow for informal dispute resolution. The outcome variable refers to whether there exists a disparity among agreements where this informal coordination is possible. In the data set, there is a binary variable which measures both of these ideas, so the analysis of both variables should be fairly straightforward. If international legal agreements where informal dispute resolutions are available tend to be more enforceable, this analysis would support my thesis that international legal agreements where informal coordination is allowed are more enforceable. This could take the form of a higher mean value in the enforceability variable among the group of agreements with informal dispute resolution options, skewed values on a dotplot, or other demonstrations of statistical correlation among these two variables. However, if this kind of relationship is not evident in the data, my hypothesis will be proven incorrect.
 
-##  Data Visualization
+## Data Visualization
 
 ```{r}
 library(readr)
 library(dplyr)
 library(tidyverse)
 ```
-
-
 
 ```{r}
 data_rep_ch7 <- read_csv("data_rep_ch7.csv")
@@ -80,4 +83,3 @@ enforceable_informal_regression <- lm(enforce ~ info, data = data_rep_ch7)
 enforceable_informal_regression
 
 ```
-
