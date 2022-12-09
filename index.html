@@ -1524,67 +1524,45 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <p>Each chapter of Koremenos’s book includes a different data set. My data set comes from her seventh chapter, “Dispute resolution provisions,” in which she analyzes what aspects of international agreements contribute to better resuslts in dispute resolution. In my analysis, I specifically analyze two binary variables: “enforce” and “info.” In her code, “enforce” is coded as a ‘1’ if there is a problem with enforcement and ‘0’ if informal power may be used in dispute resolution. This informal power may refer to side payments, fines, or other kinds of compensation that may resolve disputes without formal and traditional negotiations.</p>
 <p>My explanatory variable regards whether or not international legal agreements allow for informal dispute resolution. The outcome variable refers to whether there exists a disparity among agreements where this informal power allotted to the agreement exists. Below is a barplot that shows the quantity of agreements that are enforceable or not enforceable within the data set.</p>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://readr.tidyverse.org'>readr</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://dplyr.tidyverse.org'>dplyr</a></span><span class='op'>)</span></span>
-<span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>data_rep_ch7</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://readr.tidyverse.org/reference/read_delim.html'>read_csv</a></span><span class='op'>(</span><span class='st'>"data_rep_ch7.csv"</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>informal_vs_enforce</span> <span class='op'>&lt;-</span> <span class='va'>data_rep_ch7</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>info</span>, <span class='va'>enforce</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span></span>
-<span><span class='va'>informal_vs_enforce</span> <span class='op'>&lt;-</span> <span class='va'>informal_vs_enforce</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>informal_power <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>info</span><span class='op'>==</span><span class='fl'>1</span>, <span class='st'>"Informal Power"</span>, <span class='st'>"No Informal Power"</span><span class='op'>)</span>,</span>
-<span>         enforce_power <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>enforce</span><span class='op'>==</span><span class='fl'>1</span>, <span class='st'>"Not Enforceable"</span>, <span class='st'>"Enforceable"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>enforceability</span> <span class='op'>&lt;-</span> <span class='va'>data_rep_ch7</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/group_by.html'>group_by</a></span><span class='op'>(</span><span class='va'>enforce</span><span class='op'>)</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/summarise.html'>summarise</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/context.html'>n</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>enforceability</span> <span class='op'>&lt;-</span> <span class='va'>enforceability</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://dplyr.tidyverse.org/reference/mutate.html'>mutate</a></span><span class='op'>(</span>enforce_new <span class='op'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/if_else.html'>if_else</a></span><span class='op'>(</span><span class='va'>enforce</span><span class='op'>==</span><span class='fl'>1</span>, <span class='st'>"Not Enforceable"</span>, <span class='st'>"Enforceable"</span><span class='op'>)</span><span class='op'>)</span></span>
-<span></span>
-<span><span class='va'>enforce_barplot</span> <span class='op'>&lt;-</span> <span class='va'>enforceability</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>x <span class='op'>=</span> <span class='va'>enforce_new</span>,</span>
-<span>             y <span class='op'>=</span> <span class='va'>n</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> </span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"dodge"</span>, stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Enforceable vs. Not Enforceable International Agreements"</span>,</span>
-<span>       x <span class='op'>=</span> <span class='st'>"Enforceability of Agreements"</span>,</span>
-<span>       y <span class='op'>=</span> <span class='st'>"Amount of Agreements"</span><span class='op'>)</span></span>
-<span><span class='va'>enforce_barplot</span></span></code></pre>
-</div>
-<p><img src="index_files/figure-html5/unnamed-chunk-1-1.png" width="624" /></p>
+<p><img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
 <h2 id="results"><u>Results</u></h2>
 <div class="layout-chunk" data-layout="l-body">
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>informal_vs_enforce_barplot</span> <span class='op'>&lt;-</span> <span class='va'>informal_vs_enforce</span> <span class='op'>|&gt;</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/ggplot.html'>ggplot</a></span><span class='op'>(</span><span class='fu'><a href='https://ggplot2.tidyverse.org/reference/aes.html'>aes</a></span><span class='op'>(</span>fill<span class='op'>=</span> <span class='va'>enforce_power</span>,</span>
-<span>             y <span class='op'>=</span> <span class='va'>n</span>,</span>
-<span>             x<span class='op'>=</span><span class='va'>informal_power</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>+</span> <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/geom_bar.html'>geom_bar</a></span><span class='op'>(</span>position <span class='op'>=</span> <span class='st'>"dodge"</span>, stat <span class='op'>=</span> <span class='st'>"identity"</span><span class='op'>)</span> <span class='op'>+</span></span>
-<span>  <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>labs</a></span><span class='op'>(</span>title <span class='op'>=</span> <span class='st'>"Informal Conflict Resolution vs. Enforceability of International Agreements"</span>,</span>
-<span>       x <span class='op'>=</span> <span class='st'>"Informal Power Capabilities"</span>, y <span class='op'>=</span> <span class='st'>"Amount of Agreements"</span><span class='op'>)</span></span>
-<span><span class='va'>informal_vs_enforce_barplot</span></span></code></pre>
+<p><img src="index_files/figure-html5/unnamed-chunk-3-1.png" width="624" style="display: block; margin: auto;" /></p>
 </div>
-<img src="index_files/figure-html5/unnamed-chunk-2-1.png" width="624" />
-<div class="sourceCode">
-<pre class="sourceCode r"><code class="sourceCode r"><span><span class='va'>enforceable_informal_regression</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/lm.html'>lm</a></span><span class='op'>(</span><span class='va'>enforce</span> <span class='op'>~</span> <span class='va'>info</span>, data <span class='op'>=</span> <span class='va'>data_rep_ch7</span><span class='op'>)</span></span>
-<span><span class='va'>enforceable_informal_regression</span></span></code></pre>
+<div class="layout-chunk" data-layout="l-body">
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;"></th>
+<th style="text-align: right;">Estimate</th>
+<th style="text-align: right;">Std. Error</th>
+<th style="text-align: right;">t value</th>
+<th style="text-align: right;">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.20</td>
+<td style="text-align: right;">0.04</td>
+<td style="text-align: right;">5.34</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">info</td>
+<td style="text-align: right;">0.33</td>
+<td style="text-align: right;">0.06</td>
+<td style="text-align: right;">5.53</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
 </div>
-<pre><code>
-Call:
-lm(formula = enforce ~ info, data = data_rep_ch7)
-
-Coefficients:
-(Intercept)         info  
-     0.2029       0.3284  </code></pre>
-</div>
+<p>33% lesser chance of the agreement being enforced based on the data, say probability not likelihood</p>
 <h2 id="research-proposal">Research Proposal</h2>
 <p>Are international legal agreements more enforceable when parties can negotiate and coordinate informally? In this study, I will analyze the relationship between the ability for international parties to negotiate in an informal manner and the enforceability of the agreement under which they would have such ability. I hypothesize that those agreements which allow for nations to coordinate in informal negotiations will be more effective in the metric of enforceability. My theory in support is rooted in the inherent power of the state; in agreements where nation states have more authority over the conditions with which they can interact with their peers, these conditions, with this greater leeway, will be more enforceable. My explanatory variable regards whether or not international legal agreements allow for informal dispute resolution. The outcome variable refers to whether there exists a disparity among agreements where this informal coordination is possible. In the data set, there is a binary variable which measures both of these ideas, so the analysis of both variables should be fairly straightforward. If international legal agreements where informal dispute resolutions are available tend to be more enforceable, this analysis would support my thesis that international legal agreements where informal coordination is allowed are more enforceable. This could take the form of a higher mean value in the enforceability variable among the group of agreements with informal dispute resolution options, skewed values on a dotplot, or other demonstrations of statistical correlation among these two variables. However, if this kind of relationship is not evident in the data, my hypothesis will be proven incorrect.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>

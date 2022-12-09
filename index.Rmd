@@ -7,6 +7,25 @@ output:
     self_contained: false
 ---
 
+```{r include=FALSE}
+#Options
+options(
+  scipen = 9,
+  width = 100)
+knitr::opts_chunk$set(
+  echo = FALSE,
+  message = FALSE,
+  warning = FALSE,
+  fig.align = "center")
+
+library(readr)
+library(dplyr)
+library(tidyverse)
+
+data_rep_ch7 <- read_csv("data_rep_ch7.csv")
+```
+
+
 ## [Introduction]{.underline}
 
 Are international legal agreements more enforceable when parties can negotiate and coordinate informally? In this study, I will analyze the relationship between the ability for international parties to negotiate i![]()n an informal manner and the enforceability of the agreement under which they would have such ability. I hypothesize that those agreements which al![]()low for nations to coordinate in informal negotiations will be more effective in the metric of enforceability. My theory in support is rooted in the inherent power of the state; in agreements where nation states have more authority over the conditions with which they can interact with their peers, these conditions, with this greater leeway, will be more enforceable.
@@ -20,11 +39,7 @@ Each chapter of Koremenos's book includes a different data set. My data set come
 My explanatory variable regards whether or not international legal agreements allow for informal dispute resolution. The outcome variable refers to whether there exists a disparity among agreements where this informal power allotted to the agreement exists. Below is a barplot that shows the quantity of agreements that are enforceable or not enforceable within the data set.
 
 ```{r}
-library(readr)
-library(dplyr)
-library(tidyverse)
 
-data_rep_ch7 <- read_csv("data_rep_ch7.csv")
 
 informal_vs_enforce <- data_rep_ch7 |>
   group_by(info, enforce) |>
@@ -63,9 +78,15 @@ informal_vs_enforce_barplot <- informal_vs_enforce |>
        x = "Informal Power Capabilities", y = "Amount of Agreements")
 informal_vs_enforce_barplot
 
-enforceable_informal_regression <- lm(enforce ~ info, data = data_rep_ch7)
-enforceable_informal_regression
 ```
+
+```{r}
+enforceable_informal_regression <- lm(enforce ~ info, data = data_rep_ch7)
+summary(enforceable_informal_regression)$coefficients |>
+  knitr::kable(digits = 2)
+```
+
+33% lesser chance of the agreement being enforced based on the data, say probability not likelihood
 
 ## Research Proposal
 
