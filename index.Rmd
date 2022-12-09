@@ -86,7 +86,7 @@ summary(enforceable_informal_regression)$coefficients |>
   knitr::kable(digits = 2)
 ```
 
-33% lesser chance of the agreement being enforced based on the data, say probability not likelihood
+33% lesser chance of the agreement being enforced based on the data, say probability not likelihood on average about 20 percent of agreements have enforcement issues 33% increase in the amount of agreements that have enforcement issues
 
 ## Research Proposal
 
