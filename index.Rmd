@@ -1,7 +1,7 @@
 ---
-title: "Gov 50 Final Project"
+title: "International Law: An Analysis of Efficacy"
 author: "Kieran Kelly"
-description: "International Law: An Analysis of Efficacy"
+description: "Does the availability of informal dispute resolution capabilities within international agreements improve the enforceability of such agreements?"
 output:
   distill::distill_article:
     self_contained: false
